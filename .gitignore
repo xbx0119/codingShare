@@ -1,0 +1,27 @@
+# dir
+node_modules/
+build/Release
+
+public/node_modules
+
+
+# tools
+bower_components
+.npm
+*.tgz
+.eslintcache
+.env
+
+
+# log
+logs
+*.log
+npm-debug.log*
+
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
