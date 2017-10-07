@@ -1,7 +1,9 @@
-#editor {
+#code {
 	width: 100%;
-	height: calc(100% - 50px);
-	background: #34352C;
+	height: 100%;
+	box-sizing: border-box;
+	// background: #34352C;
+	background: rgba(52,53,44,0.8);
 
 	font-family: sans-serif;
 	padding: 10px;
@@ -11,5 +13,8 @@
 	vertical-align: center;
 	color: #ddd;
 
+	resize: none;
+
 	outline:none;
+	border-radius: 5px;
 }

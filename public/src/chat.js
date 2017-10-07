@@ -1,20 +1,19 @@
 import React from 'react';
 
 import Style from '../css/base.scss';
-import style from '../css/header.scss';
 
-class Header extends React.Component {
+class Chat extends React.Component {
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
 		return (
-			<div id="header">
-				header
+			<div id="chat">
+				chat
 			</div>
 		)
 	}
 }
 
-export default Header;
+export default Chat;
