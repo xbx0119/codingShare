@@ -1,7 +1,8 @@
 import React from 'react';
 
+import keyEvent from '../../util/keyEvent';
 
-import Style from '../css/editor.scss';
+import Style from '../../css/editor.scss';
 
 class Editor extends React.Component {
 	constructor(props) {
@@ -20,14 +21,18 @@ class Editor extends React.Component {
 	}
 
 	updateCode(code) {
-		this.refs.codearea.value += code;
+		// this.refs.codearea.value += code;
+		// var e = new keyEvent('KeyboardEvent');
+		var e = document.createEvent('KeyboardEvent')
+		e.initKeyboardEvent('keydown', true, true, document.defaultView, "a", 0, "", 0);
+		this.refs.codearea.dispatchEvent(e)
 	}
 
 	sendCode(e) {
 		// console.log(e.keyCode)
 		var socket = this.props.socket;
 
-		socket.emit('code', String.fromCharCode(e.keyCode))
+		socket.emit('code', e.keyCode)
 	}
 
 

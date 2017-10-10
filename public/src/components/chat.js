@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Style from '../css/base.scss';
+import Style from '../../css/base.scss';
 
 class Chat extends React.Component {
 	constructor(props) {

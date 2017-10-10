@@ -1,40 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
-
-import Control from './src/control';
-import Editor from './src/editor';
-import Chat from './src/chat';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Style from './css/base.scss';
 
-import io from 'socket.io-client';
+
+import Index from './src/page/index';
+import Home from './src/page/home';
+
 
 class App extends React.Component {
 	constructor(props) {
-		super(props);
-		var socket = io('http://localhost:7000');
-		socket.on('connect', function() {
-			console.log("connected!")
-		});
-		this.state = {
-			socket: socket
-		}
+		super(props)
 	}
 
 	render() {
 		return (
-			<div id="wrapper">
-				<Control />
-				<Editor socket={this.state.socket} />
-				<Chat />
-			</div>
+			<Router>
+				<div id="wrapper">
+					<Route exact path="/" component={Index} />
+					<Route path="/home" component={Home} />
+				</div>
+			</Router>
 		)
 	}
 };
 
 ReactDOM.render(
 	<App />,
-	document.getElementById("root")
+	document.getElementById('root')
 );
+
+
