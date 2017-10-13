@@ -10,6 +10,24 @@
 	background-repeat: no-repeat;
 }
 
+.sp-scrollbar {
+	&::-webkit-scrollbar-track {
+		border: 0px;
+		background-color: transparent;
+		margin-top: 0px;
+		margin-left: 10px;
+	}
+
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: #aaa;	
+		border-radius: 3px;
+	}
+}
+
 #home > .content {
 	width: 80%;
 	height: 80%;
@@ -28,7 +46,19 @@
 	width: 20%;
 	height: 100%;
 	background: #fff;
+	display: flex;
+	flex-direction: column;
+
+	.head {
+		height: 150px;
+		border-bottom: 1px solid #666;
+	}
+	.content {
+		flex-grow: 2;
+		overflow: auto;
+	}
 }
+
 
 #editor {
 	width: 500px;

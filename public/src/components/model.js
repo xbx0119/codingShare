@@ -5,12 +5,16 @@ import style from '../../css/model.scss';
 import Login from './login';
 import Register from './register';
 
+import { connect } from 'react-redux'
+
+import { showModel, closeModel } from '../redux/action/modelAction';
+
 class Model extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			show: this.props.show
-		}
+		// this.state = {
+		// 	show: this.props.show
+		// }
 		
 	}
 
@@ -32,15 +36,17 @@ class Model extends React.Component {
 	}
 
 	close() {
-		this.setState({
-			show: !this.state.show
-		});
-		this.props.cb();
+		// this.setState({
+		// 	show: !this.state.show
+		// });
+
+		dispatch(closeModel())
+		// this.props.cb();
 	}
 
 	render() {
 		return (
-			<div className={this.state.show ? "model" : "model hide"}>
+			<div className={store.getState().show ? "model" : "model hide"}>
 				<div className="model-content">
 					<i className="close iconfont icon-close2" onClick={this.close.bind(this)}></i>
 					<h2 className="title">codingShare</h2>
@@ -51,4 +57,11 @@ class Model extends React.Component {
 	}	
 }
 
-export default Model;
+function select(state) {
+	return {
+		showModel: state.showModel
+
+	}
+}
+
+export default connect(select)(Model);

@@ -2,6 +2,8 @@ import React from 'react';
 
 import ajax from '../../util/ajax';
 
+import { connect } from 'react-redux'
+
 import io from 'socket.io-client';
 
 class Login extends React.Component {
@@ -51,4 +53,11 @@ class Login extends React.Component {
 	}
 }
 
-export default Login;
+function select(state) {
+	return {
+		login: state.login
+
+	}
+}
+
+export default connect()(Login);

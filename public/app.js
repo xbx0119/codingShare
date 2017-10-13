@@ -1,48 +1,64 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Style from './css/base.scss';
+import { Provider, connect } from 'react-redux';
+import { createStore } from 'redux';
 
-
-import Index from './src/page/index';
-import Home from './src/page/home';
-
-import Sidebar from './src/components/sidebar';
+import store from './src/redux/store/store';
+import { socketConnect } from './src/redux/action/socketAction';
 
 import io from 'socket.io-client';
 
 
+import RouterConfig from './src/router';
+
+
+import Style from './css/base.scss';
+
+
 class App extends React.Component {
+
 	constructor(props) {
 		super(props);
+		const { dispatch, visibleTodos, visibilityFilter } = this.props;
 
 		var socket = io('http://localhost:7000');
+
 		socket.on('connect', function() {
 			console.log("connected!")
+
+            dispatch(socketConnect(socket))
 		});
-		this.state = {
-			socket: socket
-		}
+
+		console.log(store.getState())
 	}
 
 	render() {
 		return (
-			<Router>
-				<div id="wrapper" ref="wrapper">
-					<Sidebar socket={this.state.socket} />
-
-					<Route exact path="/" component={Index} />
-					<Route path="/home" render={() => <Home socket={this.state.socket} /> } />
-				</div>
-			</Router>
+			<RouterConfig />
 		)
+		
 	}
 };
 
+App.contextTypes = { 
+	store: PropTypes.object.isRequired 
+}
+
+function select(state) {
+	return {
+		socket: state.socket
+	}
+}
+
+App = connect()(App)
+
+
 ReactDOM.render(
-	<App />,
+	<Provider store={store}>
+		<App />
+	</Provider>,
 	document.getElementById('root')
 );
 

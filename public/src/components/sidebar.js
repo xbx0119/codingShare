@@ -2,21 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
+import { connect } from 'react-redux'
 
 import Model from './model';
 
 import iconfont from '../../css/iconfont.scss';
 import style from '../../css/sidebar.scss';
 
+
+import { toggleSidebar } from '../redux/action/sidebarAction';
+import { login } from '../redux/action/loginAction';
+import { showModel, closeModel } from '../redux/action/modelAction';
+
 class Sidebar extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			show: false,
-			login: false,
-			model: false,
-			kind: ''
-		}
+		// this.state = {
+		// 	show: false,
+		// 	login: false,
+		// 	model: false,
+		// 	kind: ''
+		// }
 
 		var self = this;
 		window.addEventListener('click', function(e) {
@@ -38,19 +44,26 @@ class Sidebar extends React.Component {
 
 	toggleMenu() {
 		const sidebar = this.refs.sidebar;
-		this.state.show ? this.hide(sidebar) : this.show(sidebar);
-		this.setState({
-			show: !this.state.show
-		})
+		//this.state.show ? this.hide(sidebar) : this.show(sidebar);
+		// this.setState({
+		// 	show: !this.state.show
+		// })
+
+		store.getState().showSidebar ? this.hide(sidebar) : this.show(sidebar);
+
+		dispatch(toggleSidebar())
 	}
 
 	checkLogin2getNavUl() {
-		if(!this.state.login) {
+		const isLogin = store.getState().login;
+
+		if(!isLogin) {
 			return(
 				<ul>
 					<li><Link to='/'>Index</Link></li>
 					<li onClick={this.showModel.bind(this, 'login')}>Login</li>
 					<li onClick={this.showModel.bind(this, 'register')}>Register</li>
+					<li><Link to='/home'>Home</Link></li>
 				</ul>
 			)
 		}else {
@@ -65,9 +78,11 @@ class Sidebar extends React.Component {
 	}
 
 	logout() {
-		this.setState({
-			login: false
-		})
+		// this.setState({
+		// 	login: false
+		// })
+
+		dispatch(logout())
 	}
 
 	show(elem) {
@@ -79,16 +94,20 @@ class Sidebar extends React.Component {
 
 
 	showModel(kind) {
-		this.setState({
-			model: true,
-			kind: kind
-		})
+		// this.setState({
+		// 	model: true,
+		// 	kind: kind
+		// })
+
+		dispatch(showModel(kind))
 	}
 	closeModel() {
-		this.setState({
-			model: false,
-			kind: ''
-		})
+		// this.setState({
+		// 	model: false,
+		// 	kind: ''
+		// })
+
+		dispatch(closeModel(''))
 	}
 
 
@@ -107,4 +126,11 @@ class Sidebar extends React.Component {
 	}
 }
 
-export default Sidebar;
+function select(state) {
+	return {
+		showSidebar: state.showSidebar
+
+	}
+}
+
+export default connect(select)(Sidebar);
