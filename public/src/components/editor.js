@@ -1,5 +1,7 @@
 import React from 'react';
 
+import io from 'socket.io-client';
+
 import keyEvent from '../../util/keyEvent';
 
 import Style from '../../css/editor.scss';

@@ -9,7 +9,12 @@ class Control extends React.Component {
 	render() {
 		return (
 			<div id="control">
-				control
+				<div className="head">
+
+				</div>
+				<div className="content">
+
+				</div>
 			</div>
 		)
 	}

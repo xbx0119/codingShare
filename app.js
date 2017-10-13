@@ -23,6 +23,13 @@ app.use(logger())
 //   extension: 'ejs'
 // }))
 
+// CORS
+app.use(async (ctx, next) => {
+  ctx.set("Access-Control-Allow-Origin", "*");
+  ctx.set("Access-Control-Allow-Header", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()

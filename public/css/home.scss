@@ -1,5 +1,13 @@
-div#home {
-	background: url('../images/bg.png') no-repeat left center;
+#home {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-image: url('../images/bg.jpg');
+	background-size: 100% 100%;
+	background-position: left center;
+	background-repeat: no-repeat;
 }
 
 #home > .content {
@@ -11,7 +19,7 @@ div#home {
 }
 
 #home .content  > div {
-	border-radius: 5px;
+	border-radius: 3px;
 	// box-shadow: 10px 5px 5px red;
 	// float: left;
 }

@@ -10,11 +10,11 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     // 页面入口文件配置
-    entry : "./index.js",
+    entry : "./app.js",
     // 入口文件输出配置
     output : {
         path: __dirname + '/dist/',
-        filename: 'index.bundle.js'
+        filename: 'app.bundle.js'
     },
     module: {
         // 加载器配置

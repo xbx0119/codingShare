@@ -8,18 +8,10 @@ import Chat from '../components/chat';
 
 import Style from '../../css/home.scss';
 
-import io from 'socket.io-client';
-
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
-		var socket = io('http://localhost:7000');
-		socket.on('connect', function() {
-			console.log("connected!")
-		});
-		this.state = {
-			socket: socket
-		}
+		console.log(props)
 	}
 
 	render() {
@@ -27,7 +19,7 @@ class Home extends React.Component {
 			<div id="home">
 				<div className="content">
 					<Control />
-					<Editor socket={this.state.socket} />
+					<Editor socket={this.props.socket} />
 					<Chat />
 				</div>
 			</div>
