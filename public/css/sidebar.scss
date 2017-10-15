@@ -53,6 +53,13 @@
 	}
 }
 
+.show-sidebar {
+	transform: translate(300px, 0px);
+}
+.hide-sidebar {
+	transform: translate(0px, 0px);
+}
+
 .navbutton {
 	height: 30px;
 	line-height: 1.5rem;

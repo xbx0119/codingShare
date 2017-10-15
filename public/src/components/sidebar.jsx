@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Model from './model';
 
@@ -11,23 +12,17 @@ import style from '../../css/sidebar.scss';
 
 
 import { toggleSidebar } from '../redux/action/sidebarAction';
-import { login } from '../redux/action/loginAction';
+import { login, logout } from '../redux/action/loginAction';
 import { showModel, closeModel } from '../redux/action/modelAction';
 
 class Sidebar extends React.Component {
 	constructor(props) {
 		super(props);
-		// this.state = {
-		// 	show: false,
-		// 	login: false,
-		// 	model: false,
-		// 	kind: ''
-		// }
 
 		var self = this;
 		window.addEventListener('click', function(e) {
 			var elem = ReactDOM.findDOMNode(self);
-			if(self.state.show) {
+			if(self.props.sidebar) {
 				var curr = e.target;
 				while(curr != elem) {
 					if(curr != null) {
@@ -39,23 +34,16 @@ class Sidebar extends React.Component {
 				}
 			}
 		})
-
 	}
 
 	toggleMenu() {
+		console.log(this.props)
 		const sidebar = this.refs.sidebar;
-		//this.state.show ? this.hide(sidebar) : this.show(sidebar);
-		// this.setState({
-		// 	show: !this.state.show
-		// })
-
-		store.getState().showSidebar ? this.hide(sidebar) : this.show(sidebar);
-
-		dispatch(toggleSidebar())
+		this.props.actions.toggleSidebar()
 	}
 
 	checkLogin2getNavUl() {
-		const isLogin = store.getState().login;
+		const isLogin = this.props.login.state;
 
 		if(!isLogin) {
 			return(
@@ -78,36 +66,16 @@ class Sidebar extends React.Component {
 	}
 
 	logout() {
-		// this.setState({
-		// 	login: false
-		// })
-
-		dispatch(logout())
+		this.props.actions.logout()
 	}
 
-	show(elem) {
-		elem.style.transform = "translate(300px, 0px)";
-	}
-	hide(elem) {
-		elem.style.transform = "translate(0px, 0px)";
-	}
 
 
 	showModel(kind) {
-		// this.setState({
-		// 	model: true,
-		// 	kind: kind
-		// })
-
-		dispatch(showModel(kind))
+		this.props.actions.showModel(kind);
 	}
 	closeModel() {
-		// this.setState({
-		// 	model: false,
-		// 	kind: ''
-		// })
-
-		dispatch(closeModel(''))
+		this.props.actions.closeModel('');
 	}
 
 
@@ -115,22 +83,30 @@ class Sidebar extends React.Component {
 		return(
 			<div>
 				<i className="navbutton iconfont icon-menu" onClick={this.toggleMenu.bind(this)}></i>
-				<div className="sidebar" ref="sidebar">
+				<div className={this.props.sidebar ? "sidebar show-sidebar" : "sidebar hide-sidebar"} ref="sidebar">
 					<h2 className="menu" onClick={this.toggleMenu.bind(this)}><i className="iconfont icon-menu"></i>CodingShare</h2>
 					{this.checkLogin2getNavUl()}
 				</div>
-				<Model show={this.state.model} kind={this.state.kind} socket={this.props.socket}
-				       cb={this.closeModel.bind(this)} login={() => this.setState({login: true})} />
+				<Model />
 			</div>
 		)
 	}
 }
 
-function select(state) {
+function mapStateToProps(state) {
 	return {
-		showSidebar: state.showSidebar
-
+		sidebar: state.sidebar,
+		login: state.login
 	}
 }
 
-export default connect(select)(Sidebar);
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators({ toggleSidebar, showModel, closeModel, logout }, dispatch)
+	}
+}
+
+export default connect(
+	mapStateToProps, 
+	mapDispatchToProps
+)(Sidebar);

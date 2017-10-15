@@ -1,18 +1,18 @@
 import React from 'react';
 
-import ajax from '../../util/ajax';
-
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import io from 'socket.io-client';
+
+import { login, logout } from '../redux/action/loginAction';
+import { closeModel } from '../redux/action/modelAction';
+
 
 class Login extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			user: '',
-			passwd: ''
-		}
+		
 	}
 
 	handleChange(e) {
@@ -34,8 +34,11 @@ class Login extends React.Component {
 		this.props.socket.on('login', function(data) {
 			console.log(true)
 			if(data == "true") {
-				self.props.login();
-				self.props.close();
+				self.props.actions.login({
+					user: self.state.user, 
+					passwd: self.state.passwd
+				});
+				self.props.actions.closeModel();
 			}
 		})
 	}
@@ -53,11 +56,20 @@ class Login extends React.Component {
 	}
 }
 
-function select(state) {
+function mapStateToProps(state) {
 	return {
-		login: state.login
-
+		login: state.login,
+		socket: state.socket
 	}
 }
 
-export default connect()(Login);
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators({ login, logout, closeModel }, dispatch)
+	}
+}
+
+export default connect(
+	mapStateToProps, 
+	mapDispatchToProps
+)(Login);

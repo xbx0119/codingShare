@@ -1,7 +1,6 @@
 
-export function toggleSidebar(text) {
+export function toggleSidebar() {
 	return { 
-		type: 'toggle', 
-		text 
+		type: 'toggle'
 	}
 }

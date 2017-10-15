@@ -8,10 +8,14 @@ import Chat from '../components/chat';
 
 import Style from '../../css/home.scss';
 
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props)
 	}
 
 	render() {
@@ -19,7 +23,7 @@ class Home extends React.Component {
 			<div id="home">
 				<div className="content">
 					<Control />
-					<Editor socket={this.props.socket} />
+					<Editor />
 					<Chat />
 				</div>
 			</div>
@@ -27,4 +31,4 @@ class Home extends React.Component {
 	}
 };
 
-export default Home;
+export default connect()(Home);

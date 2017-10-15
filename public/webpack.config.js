@@ -10,17 +10,17 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     // 页面入口文件配置
-    entry : "./app.js",
+    entry : "./index.js",
     // 入口文件输出配置
     output : {
         path: __dirname + '/dist/',
-        filename: 'app.bundle.js'
+        filename: 'index.bundle.js'
     },
     module: {
         // 加载器配置
         loaders: [
         {
-            test: /\.js$/,
+            test: /\.(js|jsx)$/,
             loader: 'babel-loader',
             query:{
                 presets:['es2015','react']
@@ -47,6 +47,9 @@ module.exports = {
             }]
         }
         ]        
+    },
+    resolve: {
+        extensions: ['.js', '.jsx']
     },
     // 插件项
     plugins: [

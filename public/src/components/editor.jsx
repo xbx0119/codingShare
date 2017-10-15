@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import io from 'socket.io-client';
 
@@ -10,7 +12,7 @@ class Editor extends React.Component {
 	constructor(props) {
 		super(props);
 		var self = this;
-		props.socket.on('code', function(data) {
+		this.props.socket.on('code', function(data) {
 			console.log("get code" + data)
 			self.updateCode(data);
 		});
@@ -28,13 +30,21 @@ class Editor extends React.Component {
 		var e = document.createEvent('KeyboardEvent')
 		e.initKeyboardEvent('keydown', true, true, document.defaultView, "a", 0, "", 0);
 		this.refs.codearea.dispatchEvent(e)
+		console.log("update!")
 	}
 
 	sendCode(e) {
 		// console.log(e.keyCode)
 		var socket = this.props.socket;
-
-		socket.emit('code', e.keyCode)
+		
+		console.log(this.props.login.user)
+		console.log(this.props.room.creator)
+		if(this.props.login.user == this.props.room.creator) {
+			console.log('key down')
+			socket.emit('code', e.keyCode)
+		}else {
+			console.log("room creator, not emit")
+		}
 	}
 
 
@@ -49,4 +59,21 @@ class Editor extends React.Component {
 	}
 }
 
-export default Editor;
+function mapStateToProps(state) {
+	return {
+		socket: state.socket,
+		login: state.login,
+		room: state.room
+	}
+}
+
+// function mapDispatchToProps(dispatch) {
+// 	return {
+// 		actions: bindActionCreators({ }, dispatch)
+// 	}
+// }
+
+export default connect(
+	mapStateToProps 
+	// mapDispatchToProps
+)(Editor);

@@ -1,52 +1,51 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import style from '../../css/model.scss';
 
 import Login from './login';
 import Register from './register';
+import Addroom from './addroom';
 
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 
 import { showModel, closeModel } from '../redux/action/modelAction';
 
 class Model extends React.Component {
 	constructor(props) {
 		super(props);
-		// this.state = {
-		// 	show: this.props.show
-		// }
-		
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({
-			show: nextProps.show
-		})
+		// this.setState({
+		// 	show: nextProps.show
+		// })
 	}
 
 	renderContentByKind() {
-		switch(this.props.kind) {
+		console.log("render conten by kind")
+		switch(this.props.model.kind) {
 			case 'login':
-				return <Login login={this.props.login} close={this.close.bind(this)} socket={this.props.socket} />;
+				console.log("render login")
+				return <Login />;
 				break;
 			case 'register':
 				return <Register />;
+				break;
+			case 'addroom': 
+				return <Addroom />;
 				break;
 		}
 	}
 
 	close() {
-		// this.setState({
-		// 	show: !this.state.show
-		// });
-
-		dispatch(closeModel())
-		// this.props.cb();
+		this.props.actions.closeModel();
 	}
 
 	render() {
 		return (
-			<div className={store.getState().show ? "model" : "model hide"}>
+			<div className={this.props.model.show ? "model" : "model hide"}>
 				<div className="model-content">
 					<i className="close iconfont icon-close2" onClick={this.close.bind(this)}></i>
 					<h2 className="title">codingShare</h2>
@@ -57,11 +56,19 @@ class Model extends React.Component {
 	}	
 }
 
-function select(state) {
+function mapStateToProps(state) {
 	return {
-		showModel: state.showModel
-
+		model: state.model
 	}
 }
 
-export default connect(select)(Model);
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators({ showModel, closeModel }, dispatch)
+	}
+}
+
+export default connect(
+	mapStateToProps, 
+	mapDispatchToProps
+)(Model);

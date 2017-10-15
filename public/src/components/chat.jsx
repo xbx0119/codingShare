@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Style from '../../css/base.scss';
+
 
 class Chat extends React.Component {
 	constructor(props) {
@@ -16,4 +19,4 @@ class Chat extends React.Component {
 	}
 }
 
-export default Chat;
+export default connect()(Chat);

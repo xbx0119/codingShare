@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import { BrowserRouter as Router, Route, Link,} from 'react-router-dom';
 
@@ -13,7 +13,6 @@ import Sidebar from './components/sidebar';
 class RouterConfig extends React.Component{
 	constructor(props) {
 		super(props);
-		console.log(this.context.store)
 	}
 
 	render() {
