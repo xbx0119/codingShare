@@ -11,6 +11,7 @@ class Room extends React.Component {
 	}
 
 	enterRoom() {
+		console.log("this room is creator by: " + this.props.creator)
 		this.props.actions.enterRoom({ id: this.props.id, creator: this.props.creator})
 		console.log("enter" + this.props.id)
 

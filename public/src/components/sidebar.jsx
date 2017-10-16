@@ -37,7 +37,6 @@ class Sidebar extends React.Component {
 	}
 
 	toggleMenu() {
-		console.log(this.props)
 		const sidebar = this.refs.sidebar;
 		this.props.actions.toggleSidebar()
 	}

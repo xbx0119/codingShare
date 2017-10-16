@@ -18,16 +18,12 @@ class Model extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		// this.setState({
-		// 	show: nextProps.show
-		// })
+
 	}
 
 	renderContentByKind() {
-		console.log("render conten by kind")
 		switch(this.props.model.kind) {
 			case 'login':
-				console.log("render login")
 				return <Login />;
 				break;
 			case 'register':

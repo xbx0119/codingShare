@@ -46,7 +46,6 @@ function loginReducer(state = {state: false, user: '', passwd: ''}, action) {
 function sidebarReducer(state = false, action) {
 	switch(action.type) {
 		case 'toggle':
-			console.log("toggle")
 			return !state;
 			break;
 		default:
@@ -57,8 +56,6 @@ function sidebarReducer(state = false, action) {
 function modelReducer(state = {show: false, kind: ''}, action) {
 	switch(action.type) {
 		case 'show':
-			console.log("reduce: " + action.kind)
-			console.log(state)
 			return {
 				show: true,
 				kind: action.kind
@@ -76,8 +73,8 @@ function roomReducer(state = {id: '', creator: ''}, action) {
 	switch(action.type) {
 		case 'enter':
 			return {
-				id: action.id,
-				creator: action.creator
+				id: action.info.id,
+				creator: action.info.creator
 			}
 			break;
 		default:

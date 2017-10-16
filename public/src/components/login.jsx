@@ -23,8 +23,6 @@ class Login extends React.Component {
 
 	dologin() {
 		var self = this;
-		console.log(this.state.user + ": " + this.state.passwd)
-		// this.props.login()
 
 		this.props.socket.emit('login', JSON.stringify({
 			user: this.state.user,
@@ -32,7 +30,6 @@ class Login extends React.Component {
 		}));
 
 		this.props.socket.on('login', function(data) {
-			console.log(true)
 			if(data == "true") {
 				self.props.actions.login({
 					user: self.state.user, 

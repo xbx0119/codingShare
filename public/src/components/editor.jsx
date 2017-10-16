@@ -11,9 +11,11 @@ import Style from '../../css/editor.scss';
 class Editor extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			code: ''
+		}
 		var self = this;
 		this.props.socket.on('code', function(data) {
-			console.log("get code" + data)
 			self.updateCode(data);
 		});
 
@@ -24,26 +26,26 @@ class Editor extends React.Component {
 		return false;
 	}
 
-	updateCode(code) {
-		// this.refs.codearea.value += code;
-		// var e = new keyEvent('KeyboardEvent');
-		var e = document.createEvent('KeyboardEvent')
-		e.initKeyboardEvent('keydown', true, true, document.defaultView, "a", 0, "", 0);
-		this.refs.codearea.dispatchEvent(e)
-		console.log("update!")
+	handleInput(e) {
+		var data = e.target.value;
+		this.updateCode(data);
+
+		this.sendCode(data);
 	}
 
-	sendCode(e) {
-		// console.log(e.keyCode)
+	updateCode(data) {
+		this.setState({
+			code: data
+		})
+	}
+
+	sendCode(data) {
 		var socket = this.props.socket;
 		
-		console.log(this.props.login.user)
-		console.log(this.props.room.creator)
 		if(this.props.login.user == this.props.room.creator) {
-			console.log('key down')
-			socket.emit('code', e.keyCode)
+			socket.emit('code', data)
 		}else {
-			console.log("room creator, not emit")
+			console.log("not room creator, not emit")
 		}
 	}
 
@@ -51,8 +53,8 @@ class Editor extends React.Component {
 	render() {
 		return (
 			<div id="editor">
-				<textarea ref="codearea" id="code" spellCheck="false" onClick={this.handleFocus} onKeyDown={this.sendCode.bind(this)}>
-					
+				<textarea ref="codearea" id="code" spellCheck="false" value={this.state.code}
+					onClick={this.handleFocus} onChange={this.handleInput.bind(this)}>
 				</textarea>
 			</div>
 		)

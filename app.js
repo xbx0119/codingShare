@@ -17,11 +17,11 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
-// app.use(require('koa-static')(__dirname + '/public'))
+app.use(require('koa-static')(__dirname + '/public/dist'))
 
-// app.use(views(__dirname + '/views', {
-//   extension: 'ejs'
-// }))
+app.use(views(__dirname + '/public/dist', {
+  extension: 'ejs'
+}))
 
 // CORS
 app.use(async (ctx, next) => {
@@ -41,9 +41,14 @@ app.use(async (ctx, next) => {
 // routes
 app.use(router.routes(), router.allowedMethods())
 
+
 // error-handling
-app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
+app.on('error', async (ctx, next) => {
+  await ctx.render('index', {
+    title: 'Hello Koa 2!'
+  })
 });
+
+
 
 module.exports = app

@@ -13,7 +13,7 @@ function socketApp(io) {
 
         socket.on('login', function(info) {
             var data = JSON.parse(info);
-            if(data.passwd == '123456') {
+            if(true) {
                 const user = {
                     name: data.user,
                     socket: socket
