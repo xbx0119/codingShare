@@ -50,7 +50,6 @@ class Sidebar extends React.Component {
 					<li><Link to='/'>Index</Link></li>
 					<li onClick={this.showModel.bind(this, 'login')}>Login</li>
 					<li onClick={this.showModel.bind(this, 'register')}>Register</li>
-					<li><Link to='/home'>Home</Link></li>
 				</ul>
 			)
 		}else {

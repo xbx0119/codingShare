@@ -41,6 +41,9 @@ app.use(async (ctx, next) => {
 // routes
 app.use(router.routes(), router.allowedMethods())
 
+app.use(async (ctx) => {
+  ctx.redirect('/');
+})
 
 // error-handling
 app.on('error', async (ctx, next) => {
