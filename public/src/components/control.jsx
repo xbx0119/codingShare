@@ -5,6 +5,10 @@ import { bindActionCreators } from 'redux'
 import { showModel, closeModel } from '../redux/action/modelAction';
 
 import RoomList from './roomList';
+import Search from './search';
+import Menu from './menu';
+
+import headimg from '../../images/head.jpg';
 
 
 class Control extends React.Component {
@@ -12,22 +16,28 @@ class Control extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			
+			menu: false
 		}
 	}
 
-	addRoom() {
-		this.props.actions.showModel('addroom')
-		console.log("add room");
+	toggleMenu() {
+		this.setState({
+			menu: !this.state.menu
+		})
+		console.log(this.state)
 	}
 
 	render() {
 		return (
 			<div id="control">
 				<div className="head">
-					username
-
-					<i className="iconfont icon-add" onClick={this.addRoom.bind(this)}></i>
+					<div className="personinfo">
+						<img className="headimg" src={headimg} />
+						<p className="name">博勋</p>
+						<i className="option iconfont icon-settings" ref="option_button" onClick={this.toggleMenu.bind(this)}></i>
+						<Menu show={this.state.menu} />
+					</div>
+					<Search />
 				</div>
 				<div className="content sp-scrollbar">
 					<RoomList />

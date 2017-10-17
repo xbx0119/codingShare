@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import { enterRoom } from '../redux/action/roomAction';
 
+import style from '../../css/roomlist.scss';
 
 class Room extends React.Component {
 	constructor(props) {
@@ -18,12 +19,23 @@ class Room extends React.Component {
 		this.props.socket.emit('enterroom', this.props.id);
 	}
 
+	hasLock() {
+		if(this.props.passwd != '') {
+			console.log("lock")
+			return <i className="room_lock iconfont icon-lock"></i>
+		}
+	}
+
 	render() {
 		return (
 			<li onClick={this.enterRoom.bind(this)}>
-				<h2>{this.props.id} {this.props.name}</h2>
-				<p>{this.props.intro}</p>
-				<i>{this.props.password == '' ? 'x' : '!'}</i>
+				<h2 className="room_id">
+					{this.props.id}
+					{this.hasLock()}
+				</h2>
+				<h3 className="room_name" title={this.props.intro}>
+					{this.props.name}
+				</h3>
 			</li>
 		)
 	}
@@ -75,7 +87,7 @@ class RoomList extends React.Component {
 
 	render() {
 		return (
-			<ul>
+			<ul className="roomlist">
 				{this.state.rooms.map((item) => {
 					return <Room key={item.id} id={item.id} name={item.name} intro={item.intro} passwd={item.passwd} creator={item.creatorname} />
 				})}

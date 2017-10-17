@@ -1,0 +1,27 @@
+.search_bar {
+	width: 100%;
+	height: 30px;
+	margin-top: 20px;
+	position: relative;
+
+	.icon-search {
+		width: 30px;
+		height: 30px;
+		color: #666;
+		line-height: 30px;
+		text-align: center;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+
+	.search_input {
+		width: 100%;
+		height: 30px;
+		padding-left: 30px;
+		box-sizing: border-box;
+		border-radius: 3px;
+		border: 1px solid #666;
+		background: #2f363a;
+	}
+}

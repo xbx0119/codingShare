@@ -1,0 +1,42 @@
+.roomlist {
+	width: 100%;
+
+	li {
+		height: auto;
+		color: #fff;
+		padding: 10px 15px 10px 15px;
+		box-sizing: border-box;
+		cursor: pointer;
+		border-bottom: 1px solid #292c33;
+
+		.room_id {
+			width: 100%;
+			height: 40px;
+			line-height: 40px;
+			position: relative;
+			font-size: 1.8rem;
+		}
+
+		.room_name {
+			width: 100%;
+			height: 30px;
+			line-height: 30px;
+			font-size: 1.2rem;
+			box-sizing: border-box;
+
+			overflow: hidden;
+			text-overflow: ellipsis;
+			word-wrap: nowrap;
+		}
+		.room_lock {
+			height: 100%;
+			line-height: 40px;
+			display: inline-block;
+			font-size: 1.5rem;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+		
+	}
+}
